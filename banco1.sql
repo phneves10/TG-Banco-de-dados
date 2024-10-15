@@ -53,7 +53,6 @@ CREATE TABLE Musicas
  duracao VARCHAR(255),  
  num_reproducao INT,  
  linguagem VARCHAR(255),  
- classificacao INT,  
  FOREIGN KEY (idAlbuns) REFERENCES Albuns(id_albuns),  
  FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
 ); 
