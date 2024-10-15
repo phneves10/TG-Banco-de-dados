@@ -8,8 +8,7 @@ CREATE TABLE Usuarios
  cidade VARCHAR(255) NOT NULL,  
  estado VARCHAR(255) NOT NULL,  
  preferencia_musical VARCHAR(255),  
- ultimo_acesso DATE,
- CHECK (email LIKE '%_@__%.__%')  -- Verifica se o e-mail segue um formato básico
+ ultimo_acesso DATE
 );
 
 CREATE TABLE Artistas 
@@ -20,9 +19,7 @@ CREATE TABLE Artistas
  genero VARCHAR(255) NOT NULL,  
  ano_inicio INT NOT NULL,
  biografia VARCHAR(255),  
- email_artista VARCHAR(255) UNIQUE NOT NULL,
- CHECK (email_artista LIKE '%_@__%.__%'),  -- Valida o formato do e-mail
- CHECK (ano_inicio <= YEAR(CURDATE()))  -- Verifica se o ano de início não é maior que o ano atual
+ email_artista VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE Pagamento 
@@ -31,9 +28,7 @@ CREATE TABLE Pagamento
  meio_pagamento VARCHAR(255) NOT NULL,
  plano VARCHAR(255) NOT NULL,
  idUsuarios INT,
- FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario),
- CHECK (meio_pagamento IN ('cartao_credito', 'debito', 'boleto')),  -- Meio de pagamento deve ser válido
- CHECK (plano IN ('Free', 'Premium', 'Family'))  -- Planos válidos
+ FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario)
 );
 
 CREATE TABLE Albuns 
