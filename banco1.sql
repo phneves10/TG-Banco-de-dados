@@ -8,7 +8,7 @@ CREATE TABLE Usuarios
  cidade VARCHAR(255),  
  estado VARCHAR(255),  
  preferencia_musical VARCHAR(255),  
- ultimo_acesso DATE  
+ ultimo_acesso DATE
 ); 
 
 CREATE TABLE Artistas 
