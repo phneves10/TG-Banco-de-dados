@@ -27,7 +27,8 @@ CREATE TABLE Pagamento
  id_pagamento INT PRIMARY KEY,  
  meio_pagamento VARCHAR(255),  
  plano VARCHAR(255),  
- idUsuarios INT  
+ idUsuarios INT,  
+ FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario)
 ); 
 
 CREATE TABLE Albuns 
@@ -39,7 +40,8 @@ CREATE TABLE Albuns
  genero_album VARCHAR(255),  
  num_faixas INT,  
  duracao_total VARCHAR(255),  
- selo_gravadora VARCHAR(255)  
+ selo_gravadora VARCHAR(255),  
+ FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
 ); 
 
 CREATE TABLE Musicas 
@@ -51,7 +53,9 @@ CREATE TABLE Musicas
  duracao VARCHAR(255),  
  num_reproducao INT,  
  linguagem VARCHAR(255),  
- classificacao INT  
+ classificacao INT,  
+ FOREIGN KEY (idAlbuns) REFERENCES Albuns(id_albuns),  
+ FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
 ); 
 
 CREATE TABLE Playlists 
@@ -61,12 +65,7 @@ CREATE TABLE Playlists
  idUsuarios INT,  
  idMusicas INT,  
  data_criacao DATE,  
- duracao INT  
+ duracao INT,  
+ FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario),  
+ FOREIGN KEY (idMusicas) REFERENCES Musicas(id_musica)
 ); 
-
-ALTER TABLE Pagamento ADD FOREIGN KEY(idUsuarios) REFERENCES Usuarios(idUsuarios);
-ALTER TABLE Albuns ADD FOREIGN KEY(idArtistas) REFERENCES Artistas(idArtistas);
-ALTER TABLE Musicas ADD FOREIGN KEY(idAlbuns) REFERENCES Albuns(idAlbuns);
-ALTER TABLE Musicas ADD FOREIGN KEY(idArtistas) REFERENCES Artistas(idArtistas);
-ALTER TABLE Playlists ADD FOREIGN KEY(idUsuarios) REFERENCES Usuarios(idUsuarios);
-ALTER TABLE Playlists ADD FOREIGN KEY(idMusicas) REFERENCES Musicas(idMusicas);
