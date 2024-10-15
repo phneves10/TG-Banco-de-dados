@@ -38,8 +38,6 @@ CREATE TABLE Albuns
  idArtistas INT,
  data_lancamento DATE NOT NULL,  
  genero_album VARCHAR(255),  
- num_faixas INT NOT NULL CHECK (num_faixas > 0),  -- Número de faixas deve ser positivo
- duracao_total VARCHAR(8) NOT NULL,  -- Pode seguir o formato 'HH:MM:SS'
  selo_gravadora VARCHAR(255),
  FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
 );
@@ -50,8 +48,6 @@ CREATE TABLE Musicas
  nome_musica VARCHAR(255) NOT NULL,  
  idAlbuns INT,
  idArtistas INT,
- duracao VARCHAR(8) NOT NULL,  -- Formato de duração 'HH:MM:SS'
- num_reproducao INT NOT NULL CHECK (num_reproducao >= 0),  -- Número de reproduções não pode ser negativo
  linguagem VARCHAR(255), 
  FOREIGN KEY (idAlbuns) REFERENCES Albuns(id_albuns),
  FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
@@ -64,8 +60,6 @@ CREATE TABLE Playlists
  idUsuarios INT,
  idMusicas INT,
  data_criacao DATE NOT NULL,  
- duracao INT NOT NULL CHECK (duracao > 0),  -- Duração deve ser positiva
  FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario),
  FOREIGN KEY (idMusicas) REFERENCES Musicas(id_musica),
- UNIQUE (nome_playlist, idUsuarios)  -- Nome da playlist deve ser único para cada usuário
 );

@@ -77,11 +77,6 @@ BEGIN
     IF NEW.duracao NOT REGEXP '^[0-9]{2}:[0-9]{2}:[0-9]{2}$' THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Formato de duração inválido. Use o formato HH:MM:SS.';
     END IF;
-
-    -- Verifica se a classificação está entre 1 e 5
-    IF NEW.classificacao < 1 OR NEW.classificacao > 5 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Classificação inválida. Deve ser entre 1 e 5.';
-    END IF;
 END;
 
 ------------------------
@@ -103,5 +98,32 @@ BEGIN
         AND id_playlist != NEW.id_playlist
     ) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'O usuário já tem uma playlist com esse nome.';
+    END IF;
+END;
+
+------------------------
+
+CREATE TRIGGER VerificaIdadeMinima
+BEFORE INSERT ON Usuarios
+FOR EACH ROW
+BEGIN
+    IF (TIMESTAMPDIFF(YEAR, NEW.data_de_nascimento, CURDATE()) < 18) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuário deve ter pelo menos 18 anos.';
+    END IF;
+END;
+
+------------------------
+
+CREATE TRIGGER VerificaMusicaDuplicada
+BEFORE INSERT ON Musicas
+FOR EACH ROW
+BEGIN
+    DECLARE existe INT;
+    SELECT COUNT(*) INTO existe
+    FROM Musicas
+    WHERE nome_musica = NEW.nome_musica AND idAlbuns = NEW.idAlbuns;
+
+    IF existe > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Esta música já existe no álbum.';
     END IF;
 END;
