@@ -114,3 +114,16 @@ CREATE TABLE Followers (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
     FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista)
 );
+
+-- VIEWS
+
+CREATE VIEW MediaAvaliacoesMusicas AS -- Fz um calculo da media das avaliações de uma música
+SELECT 
+    id_musica,
+    AVG(avaliacao) AS media_avaliacao
+FROM 
+    Ratings
+WHERE 
+    id_musica IS NOT NULL
+GROUP BY 
+    id_musica;
