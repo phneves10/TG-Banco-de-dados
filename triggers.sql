@@ -127,3 +127,17 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Esta música já existe no álbum.';
     END IF;
 END;
+
+-------------------
+
+-- Trigger com a finalidade de criptografar as senhas inseridas na tabela Usuario
+DELIMITER $$
+
+CREATE TRIGGER BeforeInsertUsuario
+BEFORE INSERT ON Usuarios
+FOR EACH ROW
+BEGIN
+    SET NEW.senha = SHA2(NEW.senha, 256); -- Aplica SHA-256 na senha antes de inserir
+END$$
+
+DELIMITER ;
