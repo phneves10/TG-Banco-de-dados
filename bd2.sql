@@ -22,15 +22,6 @@ CREATE TABLE Artistas
  email_artista VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Pagamento 
-( 
- id_pagamento INT PRIMARY KEY AUTO_INCREMENT,  
- meio_pagamento VARCHAR(255) NOT NULL,
- plano VARCHAR(255) NOT NULL,
- idUsuarios INT,
- FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario)
-);
-
 CREATE TABLE Albuns 
 ( 
  id_albuns INT PRIMARY KEY AUTO_INCREMENT,  
