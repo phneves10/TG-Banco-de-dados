@@ -31,7 +31,8 @@ CREATE TABLE Artistas (
 -- 4. Albuns
 CREATE TABLE Albuns (
     id_albuns INT PRIMARY KEY AUTO_INCREMENT,  
-    nome_album VARCHAR(255) NOT NULL,  
+    nome_album VARCHAR(255) NOT NULL,
+    num_faixas INT,
     idArtistas INT,
     data_lancamento DATE NOT NULL,  
     genero_album VARCHAR(255),  
@@ -43,7 +44,8 @@ CREATE TABLE Albuns (
 CREATE TABLE Musicas (
     id_musica INT PRIMARY KEY AUTO_INCREMENT,
     id_genero INT,
-    nome_musica VARCHAR(255) NOT NULL,  
+    nome_musica VARCHAR(255) NOT NULL,
+    num_reproducao INT,
     idAlbuns INT,
     idArtistas INT,
     linguagem VARCHAR(255),
@@ -55,7 +57,8 @@ CREATE TABLE Musicas (
 -- 6. Playlists
 CREATE TABLE Playlists (
     id_playlist INT PRIMARY KEY AUTO_INCREMENT,  
-    nome_playlist VARCHAR(255) NOT NULL,  
+    nome_playlist VARCHAR(255) NOT NULL,
+    duracao int,
     idUsuarios INT,
     idMusicas INT,
     data_criacao DATE NOT NULL,  
@@ -67,6 +70,7 @@ CREATE TABLE Playlists (
 CREATE TABLE Assinaturas (
     id_assinatura INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
+    meio_pagamento VARCHAR(50), -- Débito, crédito, boleto.
     plano VARCHAR(50), -- Free, Premium, Family, etc.
     data_inicio DATE,
     data_fim DATE,
