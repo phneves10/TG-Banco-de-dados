@@ -76,11 +76,11 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE TRIGGER VerificaPagamentoInsert
-BEFORE INSERT ON Pagamento
+BEFORE INSERT ON Assinaturas
 FOR EACH ROW
 BEGIN
     -- Verifica se o meio de pagamento é válido
-    IF NEW.meio_pagamento NOT IN ('cartao_credito', 'debito', 'boleto') THEN
+    IF NEW.meio_pagamento NOT IN ('Crédito', 'Débito', 'Boleto') THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Meio de pagamento inválido. Escolha entre "cartao_credito", "debito" ou "boleto".';
     END IF;
 
@@ -95,11 +95,11 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE TRIGGER VerificaPagamentoUpdate
-BEFORE UPDATE ON Pagamento
+BEFORE UPDATE ON Assinaturas
 FOR EACH ROW
 BEGIN
     -- Verifica se o meio de pagamento é válido
-    IF NEW.meio_pagamento NOT IN ('cartao_credito', 'debito', 'boleto') THEN
+    IF NEW.meio_pagamento NOT IN ('Crédito', 'Débito', 'Boleto') THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Meio de pagamento inválido. Escolha entre "cartao_credito", "debito" ou "boleto".';
     END IF;
 
