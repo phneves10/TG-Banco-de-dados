@@ -1,62 +1,69 @@
-CREATE TABLE Usuarios 
-( 
- id_usuario INT PRIMARY KEY AUTO_INCREMENT,  
- nome_usuario VARCHAR(255) NOT NULL,  
- email VARCHAR(255) NOT NULL UNIQUE,  
- senha VARCHAR(255) NOT NULL,  
- data_de_nascimento DATE,  
- cidade VARCHAR(255) NOT NULL,  
- estado VARCHAR(255) NOT NULL,  
- preferencia_musical VARCHAR(255),  
- ultimo_acesso DATE
+-- 1. Generos
+CREATE TABLE Generos (
+    id_genero INT PRIMARY KEY AUTO_INCREMENT,
+    nome_genero VARCHAR(50)
 );
 
-CREATE TABLE Artistas 
-( 
- id_artista INT PRIMARY KEY AUTO_INCREMENT,  
- nome_artista VARCHAR(255) NOT NULL,  
- pais_origem VARCHAR(255) NOT NULL,  
- genero VARCHAR(255) NOT NULL,  
- ano_inicio INT NOT NULL,
- biografia VARCHAR(255),  
- email_artista VARCHAR(255) UNIQUE NOT NULL
+-- 2. Usuarios
+CREATE TABLE Usuarios (
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,  
+    nome_usuario VARCHAR(255) NOT NULL,  
+    email VARCHAR(255) NOT NULL UNIQUE,  
+    senha VARCHAR(255) NOT NULL,  
+    data_de_nascimento DATE,  
+    cidade VARCHAR(255) NOT NULL,  
+    estado VARCHAR(255) NOT NULL,  
+    preferencia_musical VARCHAR(255),  
+    ultimo_acesso DATE
 );
 
-CREATE TABLE Albuns 
-( 
- id_albuns INT PRIMARY KEY AUTO_INCREMENT,  
- nome_album VARCHAR(255) NOT NULL,  
- idArtistas INT,
- data_lancamento DATE NOT NULL,  
- genero_album VARCHAR(255),  
- selo_gravadora VARCHAR(255),
- FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
+-- 3. Artistas
+CREATE TABLE Artistas (
+    id_artista INT PRIMARY KEY AUTO_INCREMENT,  
+    nome_artista VARCHAR(255) NOT NULL,  
+    pais_origem VARCHAR(255) NOT NULL,  
+    genero VARCHAR(255) NOT NULL,  
+    ano_inicio INT NOT NULL,
+    biografia VARCHAR(255),  
+    email_artista VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Musicas 
-( 
- id_musica INT PRIMARY KEY AUTO_INCREMENT,
- id_genero INT,
- nome_musica VARCHAR(255) NOT NULL,  
- idAlbuns INT,
- idArtistas INT,
- linguagem VARCHAR(255),
- FOREIGN KEY (id_genero) REFERENCES Genres(id_genero),
- FOREIGN KEY (idAlbuns) REFERENCES Albuns(id_albuns),
- FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
+-- 4. Albuns
+CREATE TABLE Albuns (
+    id_albuns INT PRIMARY KEY AUTO_INCREMENT,  
+    nome_album VARCHAR(255) NOT NULL,  
+    idArtistas INT,
+    data_lancamento DATE NOT NULL,  
+    genero_album VARCHAR(255),  
+    selo_gravadora VARCHAR(255),
+    FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
 );
 
-CREATE TABLE Playlists 
-( 
- id_playlist INT PRIMARY KEY AUTO_INCREMENT,  
- nome_playlist VARCHAR(255) NOT NULL,  
- idUsuarios INT,
- idMusicas INT,
- data_criacao DATE NOT NULL,  
- FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario),
- FOREIGN KEY (idMusicas) REFERENCES Musicas(id_musica)
+-- 5. Musicas
+CREATE TABLE Musicas (
+    id_musica INT PRIMARY KEY AUTO_INCREMENT,
+    id_genero INT,
+    nome_musica VARCHAR(255) NOT NULL,  
+    idAlbuns INT,
+    idArtistas INT,
+    linguagem VARCHAR(255),
+    FOREIGN KEY (id_genero) REFERENCES Generos(id_genero),
+    FOREIGN KEY (idAlbuns) REFERENCES Albuns(id_albuns),
+    FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
 );
 
+-- 6. Playlists
+CREATE TABLE Playlists (
+    id_playlist INT PRIMARY KEY AUTO_INCREMENT,  
+    nome_playlist VARCHAR(255) NOT NULL,  
+    idUsuarios INT,
+    idMusicas INT,
+    data_criacao DATE NOT NULL,  
+    FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario),
+    FOREIGN KEY (idMusicas) REFERENCES Musicas(id_musica)
+);
+
+-- 7. Assinaturas
 CREATE TABLE Assinaturas (
     id_assinatura INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
@@ -66,11 +73,7 @@ CREATE TABLE Assinaturas (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
-CREATE TABLE Generos (
-    id_genero INT PRIMARY KEY AUTO_INCREMENT,
-    nome_genero VARCHAR(50)
-);
-
+-- 8. Favoritos
 CREATE TABLE Favoritos (
     id_favoritos INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
@@ -83,6 +86,7 @@ CREATE TABLE Favoritos (
     FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista)
 );
 
+-- 9. Avaliacao
 CREATE TABLE Avaliacao (
     id_avaliacao INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
@@ -97,6 +101,7 @@ CREATE TABLE Avaliacao (
     FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista)
 );
 
+-- 10. Seguidores
 CREATE TABLE Seguidores (
     id_seguidores INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
@@ -106,14 +111,13 @@ CREATE TABLE Seguidores (
     FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista)
 );
 
--- VIEWS
-
-CREATE VIEW MediaAvaliacoesMusicas AS -- Fz um calculo da media das avaliações de uma música
+-- 11. View MediaAvaliacoesMusicas
+CREATE VIEW MediaAvaliacoesMusicas AS 
 SELECT 
     id_musica,
     AVG(avaliacao) AS media_avaliacao
 FROM 
-    Ratings
+    Avaliacao
 WHERE 
     id_musica IS NOT NULL
 GROUP BY 
