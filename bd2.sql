@@ -36,12 +36,12 @@ CREATE TABLE Albuns
 CREATE TABLE Musicas 
 ( 
  id_musica INT PRIMARY KEY AUTO_INCREMENT,
- id genero INT,
+ id_genero INT,
  nome_musica VARCHAR(255) NOT NULL,  
  idAlbuns INT,
  idArtistas INT,
  linguagem VARCHAR(255),
- FOREIGN KEY (id_genero) REFERENCES Genres(id_genero);
+ FOREIGN KEY (id_genero) REFERENCES Genres(id_genero),
  FOREIGN KEY (idAlbuns) REFERENCES Albuns(id_albuns),
  FOREIGN KEY (idArtistas) REFERENCES Artistas(id_artista)
 );
@@ -54,7 +54,7 @@ CREATE TABLE Playlists
  idMusicas INT,
  data_criacao DATE NOT NULL,  
  FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id_usuario),
- FOREIGN KEY (idMusicas) REFERENCES Musicas(id_musica),
+ FOREIGN KEY (idMusicas) REFERENCES Musicas(id_musica)
 );
 
 CREATE TABLE Subscriptions (
