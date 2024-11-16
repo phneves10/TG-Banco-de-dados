@@ -57,8 +57,8 @@ CREATE TABLE Playlists
  FOREIGN KEY (idMusicas) REFERENCES Musicas(id_musica)
 );
 
-CREATE TABLE Subscriptions (
-    id_subscription INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Assinaturas (
+    id_assinatura INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
     plano VARCHAR(50), -- Free, Premium, Family, etc.
     data_inicio DATE,
@@ -66,13 +66,13 @@ CREATE TABLE Subscriptions (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
-CREATE TABLE Genres (
+CREATE TABLE Generos (
     id_genero INT PRIMARY KEY AUTO_INCREMENT,
     nome_genero VARCHAR(50)
 );
 
-CREATE TABLE Favorites (
-    id_favorite INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Favoritos (
+    id_favoritos INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
     id_musica INT,
     id_album INT,
@@ -83,8 +83,8 @@ CREATE TABLE Favorites (
     FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista)
 );
 
-CREATE TABLE Ratings (
-    id_rating INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Avaliacao (
+    id_avaliacao INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
     id_musica INT,
     id_album INT,
@@ -97,8 +97,8 @@ CREATE TABLE Ratings (
     FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista)
 );
 
-CREATE TABLE Followers (
-    id_follower INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Seguidores (
+    id_seguidores INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
     id_artista INT,
     data_seguindo DATE,
