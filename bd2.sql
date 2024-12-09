@@ -116,15 +116,3 @@ CREATE TABLE Seguidores (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
     FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista)
 );
-
--- 11. View MediaAvaliacoesMusicas
-CREATE VIEW MediaAvaliacoesMusicas AS 
-SELECT 
-    id_musica,
-    AVG(avaliacao) AS media_avaliacao
-FROM 
-    Avaliacao
-WHERE 
-    id_musica IS NOT NULL
-GROUP BY 
-    id_musica;
